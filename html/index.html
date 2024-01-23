@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Temperature Sensor</title>
+    </head>
+    <body>
+        <h1>Temperature Sensor</h1>
+        <h1 id="temp"></h1>
+
+        <script>
+            fetch('http://localhost:8080/data/sensor.json')
+            .then(response => response.json())
+            .then(data => alert(data.temp))
+        </script>
+    </body>
+</html>
