@@ -1,0 +1,22 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#data {
+    text-indent: 10px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#tempdata {
+    border-radius: 10px;
+    width: 50%;
+    border: 2px solid black;
+    margin: 3px;
+}
+
+.datapoint {
+    padding: 1px;
+    margin: 5px;
+}

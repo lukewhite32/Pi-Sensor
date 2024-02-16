@@ -3,15 +3,116 @@
     <head>
         <meta charset="utf-8">
         <title>Temperature Sensor</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     </head>
     <body>
-        <h1>Temperature Sensor</h1>
-        <h1 id="temp"></h1>
+        <h1 style="text-align: center; border-bottom: 1px solid black;">Temperature Sensor</h1>
+        <div id="data">
+            <div id="tempdata">
+                <p class="datapoint">Temperature</p>
+                <p class="datapoint" id="currtemp"></p>
+                <p class="datapoint" id="hitemp"></p>
+                <p class="datapoint" id="lotemp"></p>
+            </div>
+            <div id="airdata">
+                <p class="datapoint">Air</p>
+                <p class="datapoint" id="pressure"></p>
+                <p class="datapoint" id="humidity"></p>
+            </div>
+            <div id="gyrodata">
+                <p class="datapoint">Gyroscope</p>
+                <p class="datapoint" id="gyrop"></p>
+                <p class="datapoint" id="gyroy"></p>
+                <p class="datapoint" id="gyror"></p>
+                <p class="datapoint" id="compass"></p>
+            </div>
+            <div id="acceldata">
+                <p class="datapoint">Accelerometer</p>
+                <p class="datapoint" id="accelp"></p>
+                <p class="datapoint" id="accely"></p>
+                <p class="datapoint" id="accelr"></p>
+            </div>
+            <div id="joydata">
+                <p class="datapoint">Joystick</p>
+                <p class="datapoint" id="dirup"></p>
+                <p class="datapoint" id="dirdown"></p>
+                <p class="datapoint" id="dirleft"></p>
+                <p class="datapoint" id="dirright"></p>
+                <p class="datapoint" id="dirmid"></p>
+            </div>
+        </div>
 
         <script>
-            fetch('http://localhost:8080/data/sensor.json')
-            .then(response => response.json())
-            .then(data => alert(data.temp))
+            setInterval(updateData, 200);
+            var highestTemp = 0
+            var lowestTemp = 0;
+            var currentTemp = 0;
+
+            var pressure = 0;
+            var humidity = 0;
+
+            var gyroPitch = 0;
+            var gyroRoll = 0;
+            var gyroYaw = 0;
+
+            var compass = 0;
+
+            var accelPitch = 0;
+            var accelRoll = 0;
+            var accelYaw = 0;
+            
+            var up = false;
+            var down = false;
+            var left = false;
+            var right = false;
+            var middle = false;
+
+            function updateData() {
+                fetch('http://localhost:8080/data/sensor.json')
+                .then(response => response.json())
+                .then(data => (currentTemp = data.temp))
+                .then(data => (pressure = data.pressure))
+                .then(data => (humidity = data.humidity))
+                .then(data => (gyroPitch = data.gyroPitch))
+                .then(data => (gyroRoll = data.gyroRoll))
+                .then(data => (gyroYaw = data.gyroYaw))
+                .then(data => (compass = data.compass))
+                .then(data => (accelPitch = data.accelPitch))
+                .then(data => (accelRoll = data.accelRoll))
+                .then(data => (accelYaw = data.accelYaw))
+                .then(data => (up = data.up))
+                .then(data => (down = data.down))
+                .then(data => (left = data.left))
+                .then(data => (right = data.right))
+                .then(data => (middle = data.middle))
+
+                if (currentTemp > highestTemp) {
+                    highestTemp = currentTemp;
+                }
+                else if (currentTemp < lowestTemp) {
+                    lowestTemp = currentTemp;
+                }
+
+                document.getElementById("currtemp").innerText = "Current Temperature: " + parseFloat(currentTemp);
+                document.getElementById("hitemp").innerText = "Highest Temperature: " + parseFloat(highestTemp);
+                document.getElementById("lotemp").innerText = "Lowest Temperature: " + parseFloat(lowestTemp);
+                document.getElementById("pressure").innerText = "Pressure: " + parseFloat(pressure);
+                document.getElementById("humidity").innerText = "Humidity: " + parseFloat(humidity);
+                document.getElementById("gyrop").innerText = "Pitch: " + parseFloat(gyroPitch);
+                document.getElementById("gyror").innerText = "Roll: " + parseFloat(gyroRoll);
+                document.getElementById("gyroy").innerText = "Yaw: " + parseFloat(gyroYaw);
+                document.getElementById("compass").innerText = "Compass: " + parseFloat(compass);
+                document.getElementById("accelp").innerText = "Pitch: " + parseFloat(accelPitch);
+                document.getElementById("accelr").innerText = "Roll: " + parseFloat(accelRoll);
+                document.getElementById("accely").innerText = "Yaw: " + parseFloat(accelYaw);
+                document.getElementById("dirup").innerText = "Up: " + up;
+                document.getElementById("dirdown").innerText = "Down: " + down;
+                document.getElementById("dirleft").innerText = "Left: " + left;
+                document.getElementById("dirright").innerText = "Right: " + right;
+                document.getElementById("dirmid").innerText = "Middle: " + middle;
+            }
+
         </script>
     </body>
 </html>
