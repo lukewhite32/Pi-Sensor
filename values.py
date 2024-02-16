@@ -19,9 +19,9 @@ while 1:
     compass = sense.get_compass()
 
     sense.set_imu_config(False, True, False)
-    gyroPitch = sense.get_orientation_degrees()[0]
-    gyroRoll = sense.get_orientation_degrees()[1]
-    gyroYaw = sense.get_orientation_degrees()[2]
+    gyroPitch = sense.get_orientation()[0]
+    gyroRoll = sense.get_orientation()[1]
+    gyroYaw = sense.get_orientation()[2]
 
     sense.set_imu_config(False, False, True)
     accelPitch = sense.get_accelerometer()[0]
